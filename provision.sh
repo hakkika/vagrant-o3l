@@ -8,11 +8,14 @@ sed -i 's/SELINUX=enforcing/SELINUX=disabled/' /etc/selinux/config
 systemctl stop firewalld
 systemctl disable firewalld
 
+# Configure chronyd
+sed -i 's;#allow 192.168.0.0/16;allow 192.168.0.0/16;' /etc/chrony.conf
+
 # Enable chronyd, which already is installed
 systemctl start chronyd
 systemctl enable chronyd
 
-yum -y update --exlude=kernel-uek*
+yum -y update --exclude=kernel-uek*
 yum -y install yum-utils
 
 # NOTE: chronyd is already installed
@@ -20,6 +23,8 @@ yum -y install yum-utils
 
 yum-config-manager --enable ol7_addons
 yum-config-manager --enable ol7_openstack30 ol7_openstack_extras
+yum-config-manager --enable ol7_optional_latest
+yum-config-manager --disable ol7_developer ol7_developer_EPEL
 
 # Setup BTRFS for docker-engine
 mkfs -t btrfs /dev/sdb

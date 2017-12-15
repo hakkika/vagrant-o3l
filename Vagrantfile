@@ -24,9 +24,20 @@ Vagrant.configure("2") do |config|
       controller.vm.provider "virtualbox" do |vb|
            vb.name = "controller-#{i}"
            vb.memory = "8192"
+
+           # Add third disk for cinder-volumes VG
+           vg_disk_file = "cinder_volumes-con#{i}.vdi"
+           unless File.exist?(vg_disk_file)
+              vb.customize ['createhd', '--filename', vg_disk_file, '--size', 50 * 1024]
+           end
+           vb.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 2, '--device', 0, '--type', 'hdd', '--medium', vg_disk_file]
+
+
       end
 
       controller.vm.provision :shell, :path => "provision.sh"
+
+      controller.vm.provision :shell, :path => "setup-vg.sh"
 
       if i == 1
          controller.vm.provision :shell, inline: <<-SHELL
@@ -34,7 +45,7 @@ Vagrant.configure("2") do |config|
          SHELL
       end
 
-      controller.vm.provision :reload
+      #controller.vm.provision :reload
     end
   end
 

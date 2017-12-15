@@ -1,0 +1,80 @@
+[root@ovs-comp1 network-scripts]# for f in ifcfg-bond0 ifcfg-eth?
+> do
+> echo "File: $f"
+> cat $f
+> done
+File: ifcfg-bond0
+DEVICE=bond0
+BONDING_OPTS="mode=1 miimon=250 use_carrier=1 updelay=500 downdelay=500 primary_reselect=2 primary=eth0"
+BOOTPROTO="dhcp"
+ONBOOT=yes
+File: ifcfg-eth0
+DEVICE="eth0"
+BOOTPROTO=none
+#HWADDR="08:00:27:96:C0:E6"
+ONBOOT="yes"
+MASTER=bond0
+SLAVE=yes
+File: ifcfg-eth1
+DEVICE="eth1"
+BOOTPROTO="static"
+#HWADDR="08:00:27:B9:45:E3"
+NM_CONTROLLED="yes"
+ONBOOT="yes"
+IPADDR=192.168.56.40
+NETMASK=255.255.255.0
+TYPE="Ethernet"
+#UUID="875dd41b-ecf0-4fe8-86c7-2338da113a36"
+File: ifcfg-eth2
+DEVICE="eth2"
+BOOTPROTO="static"
+#HWADDR="08:00:27:F8:CB:D8"
+NM_CONTROLLED="yes"
+ONBOOT="yes"
+IPADDR=10.10.10.30
+NETMASK=255.255.255.0
+TYPE="Ethernet"
+#UUID="d2f1096f-f5b7-472c-b76b-55e45a780816"
+[root@ovs-comp1 network-scripts]#
+
+[root@ovs-comp1 network-scripts]# ifconfig
+bond0     Link encap:Ethernet  HWaddr 08:00:27:96:C0:E6
+          inet addr:10.0.2.15  Bcast:10.0.2.255  Mask:255.255.255.0
+          UP BROADCAST RUNNING MASTER MULTICAST  MTU:1500  Metric:1
+          RX packets:20459 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:3165 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:26384115 (25.1 MiB)  TX bytes:191454 (186.9 KiB)
+
+eth0      Link encap:Ethernet  HWaddr 08:00:27:96:C0:E6
+          UP BROADCAST RUNNING SLAVE MULTICAST  MTU:1500  Metric:1
+          RX packets:20459 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:3165 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:26384115 (25.1 MiB)  TX bytes:191454 (186.9 KiB)
+
+eth1      Link encap:Ethernet  HWaddr 08:00:27:B9:45:E3
+          inet addr:192.168.56.40  Bcast:192.168.56.255  Mask:255.255.255.0
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:4092 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:3572 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:328650 (320.9 KiB)  TX bytes:1012611 (988.8 KiB)
+
+eth2      Link encap:Ethernet  HWaddr 08:00:27:F8:CB:D8
+          inet addr:10.10.10.30  Bcast:10.10.10.255  Mask:255.255.255.0
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:6 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:0 (0.0 b)  TX bytes:360 (360.0 b)
+
+lo        Link encap:Local Loopback
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:0 (0.0 b)  TX bytes:0 (0.0 b)
+
+[root@ovs-comp1 network-scripts]#
