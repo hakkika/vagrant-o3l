@@ -15,7 +15,9 @@ sed -i 's;#allow 192.168.0.0/16;allow 192.168.0.0/16;' /etc/chrony.conf
 systemctl start chronyd
 systemctl enable chronyd
 
-yum -y update --exclude=kernel-uek*
+yum -y install kernel-uek-devel
+# yum -y update --exclude=kernel-uek*
+yum -y update
 yum -y install yum-utils
 
 # NOTE: chronyd is already installed
