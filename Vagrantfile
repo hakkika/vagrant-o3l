@@ -45,7 +45,6 @@ Vagrant.configure("2") do |config|
          SHELL
       end
 
-      #controller.vm.provision :reload
     end
   end
 
@@ -69,8 +68,6 @@ Vagrant.configure("2") do |config|
     end
 
     net.vm.provision :shell, :path => "provision.sh"
-
-    net.vm.provision :reload
 
   end
 

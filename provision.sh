@@ -26,7 +26,7 @@ yum -y install yum-utils
 yum-config-manager --enable ol7_addons
 yum-config-manager --enable ol7_openstack30 ol7_openstack_extras
 yum-config-manager --enable ol7_optional_latest
-yum-config-manager --disable ol7_developer ol7_developer_EPEL
+yum-config-manager --disable ol7_developer ol7_developer_EPEL ol7_preview
 
 # Setup BTRFS for docker-engine
 mkfs -t btrfs /dev/sdb
@@ -42,4 +42,17 @@ mount /var/lib/docker
 # This will start and enable docker
 yum install -y openstack-kolla-preinstall
 
+# Copy Bash rc files for the kolla user
+cp /etc/skel/.bash* /usr/share/kolla
+chown kolla:kolla /usr/share/kolla/.bash*
+
+# Add vagrant user to the docker group
 usermod -aG docker vagrant
+
+# Set password for the root
+echo "root:K0lla123" | chpasswd
+
+# Enable SSH connections using password
+sed -i '/^PasswordAuthentication/s/PasswordAuthentication no/PasswordAuthentication yes/' /etc/ssh/sshd_config
+
+cat /vagrant/ol-hosts.txt >> /etc/hosts

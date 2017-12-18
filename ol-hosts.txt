@@ -1,0 +1,11 @@
+# Ip addresses of the openstack nodes
+10.10.10.11     controller-1
+192.168.56.21   controller-1
+10.10.10.12     controller-2
+192.168.56.22   controller-2
+10.10.10.20     network
+192.168.56.30   network
+10.10.10.30     comp-1
+192.168.56.40   comp-1
+10.10.10.31     comp-2
+192.168.56.41   comp-2
