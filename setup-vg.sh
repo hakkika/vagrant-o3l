@@ -6,4 +6,4 @@ parted /dev/sdc set 1 lvm on
 
 pvcreate /dev/sdc1
 
-vgcreate cinder_volumes /dev/sdc1
+vgcreate cinder-volumes /dev/sdc1
