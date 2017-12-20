@@ -18,7 +18,7 @@ systemctl enable chronyd
 yum -y install kernel-uek-devel
 # yum -y update --exclude=kernel-uek*
 yum -y update
-yum -y install yum-utils
+yum -y install yum-utils unzip bzip2
 
 # NOTE: chronyd is already installed
 # yum -y install ntp
@@ -54,5 +54,6 @@ echo "root:K0lla123" | chpasswd
 
 # Enable SSH connections using password
 sed -i '/^PasswordAuthentication/s/PasswordAuthentication no/PasswordAuthentication yes/' /etc/ssh/sshd_config
+systemctl restart sshd
 
 cat /vagrant/ol-hosts.txt >> /etc/hosts
