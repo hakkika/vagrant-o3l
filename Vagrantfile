@@ -56,11 +56,11 @@ Vagrant.configure("2") do |config|
     # Add host-only network interface
     net.vm.network "private_network", ip: "192.168.56.30"
 
-    # Add second host-only network interface (only for this node)
-    net.vm.network "private_network", ip: "192.168.99.10"
-
     # Add internal network interface
     net.vm.network "private_network", ip: "10.10.10.20", virtualbox__intnet: "intnet"
+
+    # Add second host-only network interface (only for this node)
+    net.vm.network "private_network", ip: "192.168.99.10"
 
     net.vm.provider "virtualbox" do |vb|
       vb.name = "net"
